@@ -5,6 +5,9 @@ import io.grpc.ManagedChannelBuilder;
 import org.example.grpc.GreetingServiceGrpc;
 import org.example.grpc.GreetingServiceOuterClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client {
     public static void main(String[] args) {
         ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8080")
@@ -14,14 +17,25 @@ public class Client {
         GreetingServiceGrpc.GreetingServiceBlockingStub stub =
                 GreetingServiceGrpc.newBlockingStub(channel);
 
-        GreetingServiceOuterClass.HelloRequest request = GreetingServiceOuterClass.HelloRequest
-                .newBuilder()
-                .setName("Roman")
-                .build();
+        List<String> names = new ArrayList<>();
+        names.add("Roman");
+        names.add("Alexandra");
+        names.add("Artem");
+        names.add("Natasha");
+        names.add("Kirill");
+        names.add("Olga");
 
-        GreetingServiceOuterClass.HelloResponse response = stub.greeting(request);
+        for (String name : names) {
+            GreetingServiceOuterClass.HelloRequest request = GreetingServiceOuterClass.HelloRequest
+                    .newBuilder()
+                    .setName(name)
+                    .build();
 
-        System.out.println(response);
+            GreetingServiceOuterClass.HelloResponse response = stub.greeting(request);
+
+            System.out.println(response);
+
+        }
 
         channel.shutdownNow();
     }
