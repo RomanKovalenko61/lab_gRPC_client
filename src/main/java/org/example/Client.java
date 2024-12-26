@@ -10,7 +10,9 @@ import java.util.List;
 
 public class Client {
     public static void main(String[] args) {
-        ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:8080")
+        String serverAddress = System.getenv("SERVER_ADDRESS");
+
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(serverAddress)
                 .usePlaintext()
                 .build();
 
