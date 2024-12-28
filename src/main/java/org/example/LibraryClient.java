@@ -16,8 +16,8 @@ public class LibraryClient {
     private final ManagedChannel channel;
     private final LibraryServiceGrpc.LibraryServiceBlockingStub blockingStub;
 
-    public LibraryClient(String host, int port) {
-        this(ManagedChannelBuilder.forAddress(host, port).usePlaintext().build());
+    public LibraryClient() {
+        this(ManagedChannelBuilder.forTarget(System.getenv("SERVER_ADDRESS")).usePlaintext().build());
     }
 
     LibraryClient(ManagedChannel channel) {
@@ -75,7 +75,7 @@ public class LibraryClient {
     }
 
     public static void main(String[] args) throws Exception {
-        LibraryClient client = new LibraryClient(System.getenv("SERVER_ADDRESS"), 8080);
+        LibraryClient client = new LibraryClient();
 
         System.out.println("Имитация взаимодействия с сервером");
         System.out.println("Добавляем пять книг ...");
